@@ -14,8 +14,8 @@
     // Initialize storage for request queues if it's not initialized yet
     if (typeof document.ajaxq == "undefined") {
       document.ajaxq = {
-        q:{},
-        r:null
+        q: {},
+        r: null
       };
     }
 
@@ -28,7 +28,7 @@
     $.extend(fullOptions, options);
 
     // Initialize current queue if it's not initialized yet
-    if (typeof document.ajaxq.q[queue] == "undefined") {
+    if (typeof document.ajaxq.q[queue] === "undefined") {
       document.ajaxq.q[queue] = {
         requests: [],
         complete: fullOptions.complete,
@@ -42,15 +42,19 @@
   {
     $.configureAjaxq(queue, {});
 
-    if (typeof options != "undefined") // Request settings are given, enqueue the new request
+    if (typeof options !== "undefined") // Request settings are given, enqueue the new request
     {
       // Copy the original options, because options.complete is going to be overridden
-
       var optionsCopy = {};
-      for (var o in options) optionsCopy[o] = options[o];
+      for (var o in options) {
+        if(options.hasOwnProperty(o)) {
+          optionsCopy[o] = options[o];
+        }
+      }
+      
       options = optionsCopy;
 
-      if(document.ajaxq.q[queue].mostRecentOnly && document.ajaxq.r != null) {
+      if(document.ajaxq.q[queue].mostRecentOnly === true && document.ajaxq.r !== null) {
         var currentRequest = document.ajaxq.q[queue].requests.shift();
         document.ajaxq.q[queue].requests = [ currentRequest ];
       }
@@ -66,7 +70,9 @@
         document.ajaxq.r = null;
 
         // Run the original callback
-        if (originalCompleteCallback) originalCompleteCallback (request, status);
+        if (originalCompleteCallback) {
+          originalCompleteCallback (request, status);
+        }
 
         // Run the next request from the queue
         if (document.ajaxq.q[queue].requests.length > 0) {
@@ -80,15 +86,15 @@
       document.ajaxq.q[queue].requests.push(options);
 
       // Also, if no request is currently running, start it
-      if (document.ajaxq.q[queue].requests.length == 1) {
+      if (document.ajaxq.q[queue].requests.length === 1) {
         document.ajaxq.q[queue].start();
         document.ajaxq.r = $.ajax(options);
       }
     }
     else // No request settings are given, stop current request and clear the queue
     {
-      var complete = document.ajaxq.q[queue].complete
-      var start = document.ajaxq.q[queue].start
+      var complete = document.ajaxq.q[queue].complete;
+      var start = document.ajaxq.q[queue].start;
 
       if (document.ajaxq.r)
       {
