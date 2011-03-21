@@ -1,14 +1,13 @@
-/*
+/*!
  * jQuery AjaxQ - AJAX request queueing for jQuery
+ * http://plugins.jquery.com/project/ajaxq
  *
- * Version: 0.0.1
- * Date: July 22, 2008
- *
- * Copyright (c) 2008 Oleg Podolsky (oleg.podolsky@gmail.com)
+ * Copyright 2008, Oleg Podolsky
  * Licensed under the MIT (MIT-LICENSE.txt) license.
  *
- * http://plugins.jquery.com/project/ajaxq
- * http://code.google.com/p/jquery-ajaxq/
+ * AUTHORS
+ * Oleg Podolsky (oleg.podolsky@gmail.com)
+ * Marcel Jackwerth (marcel.jackwerth@gmail.com) 
  */
 (function($) {
   $.configureAjaxq = function (queue, options) {
